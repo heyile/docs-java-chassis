@@ -24,7 +24,7 @@ public final class RegistryUtils {
 }
   
 ```
-发现是通过 **ServiceRegistryFactory** 来创造 **serviceRegistry**, 我们进入这个类里面
+发现是通过 **ServiceRegistryFactory** 来创造 **serviceRegistry** , 我们进入这个类里面
 
 ```java
 public final class ServiceRegistry{
@@ -129,7 +129,7 @@ public abstract class AbstractServiceRegistry implements ServiceRegistry {
 ```
 
 * initAppManager() initCacheManager() 
-初始化 **appManager **和 **cacheManager** 没什么特殊的逻辑,只是简单的 java bean 的初始化
+初始化 **appManager** 和 **cacheManager** 没什么特殊的逻辑,只是简单的 java bean 的初始化
 
 
 ```java
@@ -160,7 +160,7 @@ public abstract class AbstractServiceRegistry implements ServiceRegistry {
 
 * new IpPortManager(serviceRegistryConfig, instanceCacheManager);
 
-** IpPortManager.java**
+**IpPortManager.java**
 ```java
 
   public IpPortManager(ServiceRegistryConfig serviceRegistryConfig, InstanceCacheManager instanceCacheManager) {
@@ -268,14 +268,14 @@ public class CompositeTask implements Runnable {
   }
 }
 ```
->1.  简单来说就是新建了 **MicroserviceRegisterTask** ,**MicroserviceInstanceRegisterTask**, **MicroserviceWatchTask**, **MicroserviceInstanceHeartbeatTask** 四个初始化任务,并且添加到 taskList 中
+>1.  简单来说就是新建了 **MicroserviceRegisterTask** , **MicroserviceInstanceRegisterTask** , **MicroserviceWatchTask** , **MicroserviceInstanceHeartbeatTask** 四个初始化任务,并且添加到 taskList 中
 >2. 进一步细看这几个任务
 
 ![Task UML类图](docs/TaskUML.png)
 
 * 查看 **MicroserviceRegisterTask** 的初始化过程
 
-**MicroserviceRegisterTask.java**, 发现调用了**父类AbstractRegisterTask.java**的构造函数
+**MicroserviceRegisterTask.java** , 发现调用了父类 **AbstractRegisterTask.java** 的构造函数
 
 ```java
   public MicroserviceRegisterTask(EventBus eventBus, ServiceRegistryClient srClient, Microservice microservice) {
@@ -300,7 +300,7 @@ public class CompositeTask implements Runnable {
     }
   }
 ```
-**AbstractRegisterTask.java**,同样调用了父类 **AbstractTask.java** 的构造函数
+**AbstractRegisterTask.java** ,同样调用了父类 **AbstractTask.java** 的构造函数
 
 ```java
 
@@ -331,7 +331,7 @@ public abstract class AbstractRegisterTask extends AbstractTask {
 }
 
 ```
-**AbstractTask.java**, 唯一需要注意的就是,他会把自己注册到** eventbus**
+**AbstractTask.java** , 唯一需要注意的就是,会把自己注册到 **eventbus** 
 ```java
 public abstract class AbstractTask implements Runnable {
   protected TaskStatus taskStatus = TaskStatus.INIT;
@@ -380,7 +380,7 @@ public abstract class AbstractTask implements Runnable {
 ```
 * 查看  **MicroserviceInstanceRegisterTask** 的初始化过程
 
-**MicroserviceInstanceRegisterTask.java**, 发现和 **MicroserviceRegisterTask.java** 一样,调用父类的构造方法,根据uml 类图,我们可以知道 这两个类有同一个父类 **AbstractRegisterTask.java**,所以同样,也会把自己注册到**eventbus**
+**MicroserviceInstanceRegisterTask.java** , 发现和 **MicroserviceRegisterTask.java** 一样,调用父类的构造方法,根据uml 类图,我们可以知道 这两个类有同一个父类 **AbstractRegisterTask.java** ,所以同样,也会把自己注册到 **eventbus**
 
 ```java
   public MicroserviceInstanceRegisterTask(EventBus eventBus, ServiceRegistryConfig serviceRegistryConfig,
@@ -405,7 +405,7 @@ public abstract class AbstractTask implements Runnable {
 ```
 * 查看 **MicroserviceWatchTask** 的初始化过程
 
-根据 UML类图,  **MicroserviceWatchTask.java** 的父类是 **AbstractTask.java **,会把自己注册到**eventbus**
+根据 UML类图,  **MicroserviceWatchTask.java** 的父类是 **AbstractTask.java** ,会把自己注册到 **eventbus**
 
 ```java
   public MicroserviceWatchTask(EventBus eventBus, ServiceRegistryConfig serviceRegistryConfig,
@@ -521,7 +521,7 @@ public class ServiceCenterTask implements Runnable {
 > * 初始化了 **appManager** 和 **cacheManager**
 > * 从配置文件中读取 服务中心集群的 地址 ,初始化了 IpPortManager
 > * 创建了四个初始化任务  **MicroserviceRegisterTask**   **MicroserviceInstanceRegisterTask** **MicroserviceWatchTask**   **MicroserviceInstanceHeartbeatTask** , 并且把这四个任务统一放到了 **ServiceCenterTask** 里面管理.
-> * **eventbus** 注册了 **RemoteServiceRegistry** , **MicroserviceRegisterTask** , **MicroserviceInstanceRegisterTask**, **MicroserviceWatchTask**, **MicroserviceInstanceHeartbeatTask**,**ServiceCenterTask**. 共有以下订阅者 :
+> * **eventbus** 注册了 **RemoteServiceRegistry** , **MicroserviceRegisterTask** , **MicroserviceInstanceRegisterTask** , **MicroserviceWatchTask** , **MicroserviceInstanceHeartbeatTask**  , **ServiceCenterTask** . 共有以下订阅者 :
 
 ```java
 //RemoteServiceRegistry.java =============================================
@@ -693,7 +693,7 @@ public class ServiceCenterTask implements Runnable {
 
 - **MicroserviceRegisterTask** 
 
-这个任务主要是把 微服务的信息 注册到服务中心,因为该类和其父类 **AbstractRegisterTask** 没有 覆盖 **AbstractTask**的 run(), 所以从AbstractTask 中的**run()** 开始运行
+这个任务主要是把 微服务的信息 注册到服务中心,因为该类和其父类 **AbstractRegisterTask** 没有 覆盖 **AbstractTask**的 run(), 所以从AbstractTask 中的 **run()** 开始运行
 
 ```java
 // AbstractTask.java ================================================================
@@ -780,8 +780,8 @@ public class ServiceCenterTask implements Runnable {
     return registerSchemas();
   }
 ```
-> * **srClient.registerMicroservice(microservice)**注册微服务,我们可以对比一下注册前后的 etcd 数据库
-> 发现注册后多了两个键值对,ceb09631be4811e8a45e00ffcc26ac2f 是 注册后的 **serviceId**
+> *  **srClient.registerMicroservice(microservice)** 注册微服务,我们可以对比一下注册前后的 etcd 数据库
+> 发现注册后多了两个键值对,ceb09631be4811e8a45e00ffcc26ac2f 是 注册后的 **serviceId** 
 > 
 >   /cse-sr/ms/indexes/default/default//springmvc-sample/springmvc/0.0.3 **->** ceb09631be4811e8a45e00ffcc26ac2f
 >  /cse-sr/ms/files/default/default/ceb09631be4811e8a45e00ffcc26ac2f **->**{"serviceId":"ceb09631be4811e8a45e00ffcc26ac2f","appId":"springmvc-sample","serviceName":"springmvc","version":"0.0.3","level":"FRONT","schemas":["springmvcHello"],"status":"UP","timestamp":"1537608054","modTimestamp":"1537608054","registerBy":"SDK","framework":{"name":"servicecomb-java-chassis","version":"ServiceComb:null"}}
@@ -944,7 +944,7 @@ definitions:
     x-java-class: "org.apache.servicecomb.samples.common.schema.models.Person"
 ```
 
--  **MicroserviceInstanceRegisterTask**
+-  **MicroserviceInstanceRegisterTask** 
 
 微服务实例注册, 把当前微服务实例注册到服务中心, 使得 **消费者可以通过服务中心正确访问到 该微服务**,前面的逻辑同 microserviceTask,直接从业务逻辑开始
 
@@ -989,7 +989,7 @@ ceb09631be4811e8a45e00ffcc26ac2f/4f79a59ebe5211e8a45e00ffcc26ac2f
 7587833099835675391
 ```
 
--  **MicroserviceWatchTask**
+-  **MicroserviceWatchTask** 
 具体逻辑如下 :
 
 ```java
@@ -1113,7 +1113,7 @@ ceb09631be4811e8a45e00ffcc26ac2f/4f79a59ebe5211e8a45e00ffcc26ac2f
     }
   }
 ```
-> * 建立对应**serviceId** 的长连接,监听 service center 中intance实例的变化
+> * 建立对应 **serviceId** 的长连接,监听 service center 中intance实例的变化
 > 
 > * 一旦发现变化,会把这个 变化 post 给 eventbus 的订阅者,最终是调用了 **RemoteServiceRegistry.java** 的 **onPullMicroserviceVersionsInstancesEvent** 方法,触发了instance实例的重新拉取
 
