@@ -520,7 +520,7 @@ public class ServiceCenterTask implements Runnable {
 > * 创建了 **remoteServiceRegistry**
 > * 初始化了 **appManager** 和 **cacheManager**
 > * 从配置文件中读取 服务中心集群的 地址 ,初始化了 IpPortManager
-> * 创建了四个初始化任务  **MicroserviceRegisterTask** ** MicroserviceInstanceRegisterTask** **MicroserviceWatchTask** **MicroserviceInstanceHeartbeatTask**, 并且把这四个任务统一放到了 **ServiceCenterTask ** 里面管理.
+> * 创建了四个初始化任务  **MicroserviceRegisterTask**   ** MicroserviceInstanceRegisterTask** **MicroserviceWatchTask**   **MicroserviceInstanceHeartbeatTask** , 并且把这四个任务统一放到了 **ServiceCenterTask ** 里面管理.
 > * **eventbus** 注册了 **RemoteServiceRegistry** , ** MicroserviceRegisterTask** , **MicroserviceInstanceRegisterTask**, **MicroserviceWatchTask**, **MicroserviceInstanceHeartbeatTask**,**ServiceCenterTask**. 共有以下订阅者 :
 
 ```java
