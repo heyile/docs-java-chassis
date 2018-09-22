@@ -890,9 +890,10 @@ public class ServiceCenterTask implements Runnable {
 
 ```
 > 注册该微服务的契约,注册前后, etcd 数据库多了个键值对 :
+>  
+> key : **/cse-sr/ms/schemas/default/default/ceb09631be4811e8a45e00ffcc26ac2f/springmvcHello** 
 > 
-> key : **/cse-sr/ms/schemas/default/default/ceb09631be4811e8a45e00ffcc26ac2f/springmvcHello**
-> value:  一个yaml 字符串,具体如下
+> value :  一个yaml 字符串,具体如下
 
 ```yaml
 ---
