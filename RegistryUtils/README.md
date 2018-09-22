@@ -62,7 +62,7 @@ public final class ServiceRegistry{
 
 ![UML registry](docs/registryUML.png)
 
-RemoteServiceRegistry  进行 init()初始化,发现其调用 父类 AbstractServiceRegistry 的 init(), 然后初始化了一个线程池
+RemoteServiceRegistry  进行 init()初始化,发现其调用 父类 AbstractServiceRegistry 的 init(),初始化了一个线程池
 **RemoteServiceRegistry.java**
 
 ```java
@@ -114,13 +114,13 @@ public abstract class AbstractServiceRegistry implements ServiceRegistry {
       }
       // 初始化 cacheManager
       initCacheManager();
-      // 获取 IpPortManager , 该类主要用来存储和管理要注册的 service center 的地址
+      // 获取 IpPortManager , 用于存储和管理要注册的 service center 的地址
       ipPortManager = new IpPortManager(serviceRegistryConfig, instanceCacheManager);
       if (srClient == null) {
         //创建一个 与 service center 直接交互的 client
         srClient = createServiceRegistryClient();
       }
-  		//创建初始化热舞
+  		//创建初始化任务
       createServiceCenterTask();
   		//把本实例注册到 eventbus, 本实例中 this 实际为 AbstractServiceRegistry 的子类 RemoteServiceRegistry.java 
       eventBus.register(this);
@@ -199,7 +199,7 @@ public abstract class AbstractServiceRegistry implements ServiceRegistry {
     return ipPortList;
   }
 ```
-在看下 配置文件 **microservice.yaml**
+再看下 配置文件 **microservice.yaml**
 
 ```yaml
 
@@ -210,8 +210,8 @@ service_description:
 servicecomb:
   service:
     registry:
-		# 指定服务中心 集群的地址,会以负载均衡的方式访问其中的一个 ip
-		# 如果第一个 ip 访问不通,它默认会切换 ip
+        # 指定服务中心 集群的地址,会以负载均衡的方式访问其中的一个 ip
+        # 如果第一个 ip 访问不通,它默认会切换 ip
       address: http://127.0.0.1:30100,http://192.168.20.21
   handler:
     chain:
@@ -241,7 +241,7 @@ public class MicroserviceServiceCenterTask extends CompositeTask {
       ServiceRegistryClient srClient, Microservice microservice) {
 	//添加服务注册任务
     addTask(new MicroserviceRegisterTask(eventBus, srClient, microservice));
-	// 添加示例注册任务
+	// 添加实例注册任务
     addTask(new MicroserviceInstanceRegisterTask(eventBus, serviceRegistryConfig, srClient, microservice));
 	//添加与 service center 建立连接 和 监控任务
     addTask(new MicroserviceWatchTask(eventBus, serviceRegistryConfig, srClient, microservice));
@@ -268,8 +268,8 @@ public class CompositeTask implements Runnable {
   }
 }
 ```
->1.  简单来说就是新建了** MicroserviceRegisterTask** ,** MicroserviceInstanceRegisterTask**, **MicroserviceWatchTask**, **MicroserviceInstanceHeartbeatTask** 四个初始化任务,添加到 taskList 中
->2. 进一步细看这几个任务新建
+>1.  简单来说就是新建了** MicroserviceRegisterTask** ,** MicroserviceInstanceRegisterTask**, **MicroserviceWatchTask**, **MicroserviceInstanceHeartbeatTask** 四个初始化任务,并且添加到 taskList 中
+>2. 进一步细看这几个任务
 
 ![Task UML类图](docs/TaskUML.png)
 
@@ -405,7 +405,7 @@ public abstract class AbstractTask implements Runnable {
 ```
 * 查看 **MicroserviceWatchTask ** 的初始化过程
 
-根据 UML类图,知道 **MicroserviceWatchTask.java** 的父类是 **AbstractTask.java **,同样会把自己注册到** eventbus**
+根据 UML类图,  **MicroserviceWatchTask.java** 的父类是 **AbstractTask.java **,会把自己注册到** eventbus**
 
 ```java
   public MicroserviceWatchTask(EventBus eventBus, ServiceRegistryConfig serviceRegistryConfig,
@@ -423,8 +423,8 @@ public abstract class AbstractTask implements Runnable {
 ```
 
 * 查看 **MicroserviceInstanceHeartbeatTask** 的初始化过程
-初始化同 **MicroserviceWatchTask.java** 类似
-```java
+初始化同 **.java** 类似
+```javaMicroserviceWatchTask
   public MicroserviceInstanceHeartbeatTask(EventBus eventBus, ServiceRegistryClient srClient,
       Microservice microservice) {
     super(eventBus, srClient, microservice);
@@ -516,7 +516,7 @@ public class ServiceCenterTask implements Runnable {
 
 ```
 
-到这里, RegistryUtils.java 文件就基本初始化完毕
+到这里, RegistryUtils.init() 方法就基本初始化完毕
 > * 创建了 **remoteServiceRegistry**
 > * 初始化了 **appManager** 和 **cacheManager**
 > * 从配置文件中读取 服务中心集群的 地址 ,初始化了 IpPortManager
@@ -561,7 +561,7 @@ public class ServiceCenterTask implements Runnable {
   }
 //===================================================================
 // MicroserviceInstanceRegisterTask.java ==================================
-	// 注意,这个方法在后面建立长连接的时候,如果注册实例发生, 会最终调到这里,重新拉取 service center的instance 实例
+	//在后面建立长连接的时候,如果注册实例发生, 会最终调到这里,重新拉取 service center的instance 实例
   @Subscribe
   public void onMicroserviceRegisterTask(MicroserviceRegisterTask task) {
     if (task.taskStatus == TaskStatus.FINISHED && isSameMicroservice(task.getMicroservice())) {
@@ -636,7 +636,7 @@ public class ServiceCenterTask implements Runnable {
   public void run() {
 	// 调用父类 AbstractServiceRegistry的 run 方法
     super.run();
-	// 定时启动 serviceCenterTask, 注册和监控都只是在第一次触发, 主要是定时发送心跳
+	// 定时启动 serviceCenterTask, 注册和监控正常都只是在第一次触发, 主要是定时发送心跳 
     taskPool.scheduleAtFixedRate(serviceCenterTask,
         serviceRegistryConfig.getHeartbeatInterval(),
         serviceRegistryConfig.getHeartbeatInterval(),
@@ -663,6 +663,7 @@ public class ServiceCenterTask implements Runnable {
     loadFrameworkVersions();
     // try register
     // if failed, then retry in thread
+	// 服务中心任务初始化
     serviceCenterTask.init();
   }
 //==============================================================================
@@ -688,11 +689,11 @@ public class ServiceCenterTask implements Runnable {
   }
 ```
 
-在上面初始化的时候,我们知道 taskList 共有四个任务, **MicroserviceRegisterTask** ** MicroserviceInstanceRegisterTask** **MicroserviceWatchTask** **MicroserviceInstanceHeartbeatTask**, 我们逐个细看. 
+在上面初始化的时候,我们知道 taskList 共有四个任务, **MicroserviceRegisterTask** ** MicroserviceInstanceRegisterTask** **MicroserviceWatchTask** **MicroserviceInstanceHeartbeatTask**, 逐个细看. 
 
 - **MicroserviceRegisterTask** 
 
-这个任务主要是把 微服务的信息 注册到服务中心,因为该类和其父类 **AbstractRegisterTas**k 没有 覆盖 **AbstractTask**的 run(), 所以从AbstractTask 中的**run()** 开始运行
+这个任务主要是把 微服务的信息 注册到服务中心,因为该类和其父类 **AbstractRegisterTask** 没有 覆盖 **AbstractTask**的 run(), 所以从AbstractTask 中的**run()** 开始运行
 
 ```java
 // AbstractTask.java ================================================================
@@ -705,7 +706,6 @@ public class ServiceCenterTask implements Runnable {
     }
   }
 	// 发现是子类 AbstractRegisterTask 具体实现了这个抽象方法
-
   abstract protected void doRun();
 //==============================================================================
 //AbstractRegisterTask.java =========================================================
@@ -720,7 +720,7 @@ public class ServiceCenterTask implements Runnable {
       taskStatus = TaskStatus.FINISHED;
     }
   }
-//	发现是子类具体实现这个 抽象方法,本次 子类是 MicroserviceRegisterTask
+//	发现是子类具体实现这个 抽象方法,本次子类是 MicroserviceRegisterTask
   protected abstract boolean doRegister();
 
 //==============================================================================
@@ -797,7 +797,7 @@ public class ServiceCenterTask implements Runnable {
 	// 把从service center查到的 结果放到一个 map 里面,没有对数据做出任何改变
     Map<String, GetSchemaResponse> scSchemaMap = convertScSchemaMap(scSchemaHolder);
     // CHECK: local > sc, local != sc
-	// 遍历本地的 schemaMap, 判断 service center 是否有该 schema 契约,如果没有,就把该契约注册到 service center.如果有,就做对比,
+	// 遍历本地的 schemaMap, 判断 service center 是否有该契约,如果没有,就把该契约注册到 service center.如果有,就做对比,
    // 如果本地和service center不一致 并且版本号升级了,重新注册 该 schema,如果 本地和service center不一致 但是版本号没升级,抛出异常
     for (Entry<String, String> localSchemaEntry : microservice.getSchemaMap().entrySet()) {
       if (!registerSchema(scSchemaMap, localSchemaEntry)) {
@@ -888,7 +888,7 @@ public class ServiceCenterTask implements Runnable {
   }
 
 ```
-> 该步骤主要是注册该微服务的契约,注册前后etcd 数据库多了个键值对 :
+> 注册该微服务的契约,注册前后, etcd 数据库多了个键值对 :
 > key : **/cse-sr/ms/schemas/default/default/ceb09631be4811e8a45e00ffcc26ac2f/springmvcHello**
 > value:  一个yaml 字符串,具体如下
 
