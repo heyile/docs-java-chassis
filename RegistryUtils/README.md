@@ -689,7 +689,7 @@ public class ServiceCenterTask implements Runnable {
   }
 ```
 
-在上面初始化的时候,我们知道 taskList 共有四个任务, **MicroserviceRegisterTask** ** MicroserviceInstanceRegisterTask** **MicroserviceWatchTask** **MicroserviceInstanceHeartbeatTask**, 逐个细看. 
+在上面初始化的时候,我们知道 taskList 共有四个任务, **MicroserviceRegisterTask**  **MicroserviceInstanceRegisterTask**  **MicroserviceWatchTask**  **MicroserviceInstanceHeartbeatTask**, 逐个细看. 
 
 - **MicroserviceRegisterTask** 
 
@@ -782,8 +782,9 @@ public class ServiceCenterTask implements Runnable {
 ```
 > * **srClient.registerMicroservice(microservice) **注册微服务,我们可以对比一下注册前后的 etcd 数据库
 > 发现注册后多了两个键值对,ceb09631be4811e8a45e00ffcc26ac2f 是 注册后的 **serviceId**
->   **/cse-sr/ms/indexes/default/default//springmvc-sample/springmvc/0.0.3** -> **ceb09631be4811e8a45e00ffcc26ac2f**
->  ** /cse-sr/ms/files/default/default/ceb09631be4811e8a45e00ffcc26ac2f** -> **{"serviceId":"ceb09631be4811e8a45e00ffcc26ac2f","appId":"springmvc-sample","serviceName":"springmvc","version":"0.0.3","level":"FRONT","schemas":["springmvcHello"],"status":"UP","timestamp":"1537608054","modTimestamp":"1537608054","registerBy":"SDK","framework":{"name":"servicecomb-java-chassis","version":"ServiceComb:null"}}**
+> 
+>   /cse-sr/ms/indexes/default/default//springmvc-sample/springmvc/0.0.3 ** -> **ceb09631be4811e8a45e00ffcc26ac2f
+>  /cse-sr/ms/files/default/default/ceb09631be4811e8a45e00ffcc26ac2f ** -> **{"serviceId":"ceb09631be4811e8a45e00ffcc26ac2f","appId":"springmvc-sample","serviceName":"springmvc","version":"0.0.3","level":"FRONT","schemas":["springmvcHello"],"status":"UP","timestamp":"1537608054","modTimestamp":"1537608054","registerBy":"SDK","framework":{"name":"servicecomb-java-chassis","version":"ServiceComb:null"}}
 
 ```java
 
@@ -889,6 +890,7 @@ public class ServiceCenterTask implements Runnable {
 
 ```
 > 注册该微服务的契约,注册前后, etcd 数据库多了个键值对 :
+> 
 > key : **/cse-sr/ms/schemas/default/default/ceb09631be4811e8a45e00ffcc26ac2f/springmvcHello**
 > value:  一个yaml 字符串,具体如下
 
@@ -942,7 +944,7 @@ definitions:
     x-java-class: "org.apache.servicecomb.samples.common.schema.models.Person"
 ```
 
-- ** MicroserviceInstanceRegisterTask**
+-  **MicroserviceInstanceRegisterTask**
 
 微服务实例注册, 把当前微服务实例注册到服务中心, 使得 **消费者可以通过服务中心正确访问到 该微服务**,前面的逻辑同 microserviceTask,直接从业务逻辑开始
 
@@ -987,7 +989,7 @@ ceb09631be4811e8a45e00ffcc26ac2f/4f79a59ebe5211e8a45e00ffcc26ac2f
 7587833099835675391
 ```
 
--  ** MicroserviceWatchTask**
+-  **MicroserviceWatchTask**
 具体逻辑如下 :
 
 ```java
@@ -1112,6 +1114,7 @@ ceb09631be4811e8a45e00ffcc26ac2f/4f79a59ebe5211e8a45e00ffcc26ac2f
   }
 ```
 > * 建立对应** serviceId** 的长连接,监听 service center 中intance实例的变化
+> 
 > * 一旦发现变化,会把这个 变化 post 给 eventbus 的订阅者,最终是调用了 **RemoteServiceRegistry.java** 的 **onPullMicroserviceVersionsInstancesEvent** 方法,触发了instance实例的重新拉取
 
 
