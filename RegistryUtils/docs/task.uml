@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.apache.servicecomb.serviceregistry.task</OriginalElement>
+  <nodes>
+    <node x="217.86507936507937" y="920.0">org.apache.servicecomb.serviceregistry.task.MicroserviceServiceCenterTask</node>
+    <node x="406.5" y="620.0">org.apache.servicecomb.serviceregistry.task.MicroserviceWatchTask</node>
+    <node x="128.625" y="783.0">org.apache.servicecomb.serviceregistry.task.CompositeTask</node>
+    <node x="614.5" y="757.0">org.apache.servicecomb.serviceregistry.task.MicroserviceInstanceHeartbeatTask</node>
+    <node x="74.48313492063488" y="209.0">org.apache.servicecomb.serviceregistry.task.AbstractRegisterTask</node>
+    <node x="102.86507936507945" y="1005.0">org.apache.servicecomb.serviceregistry.task.ServiceCenterTask</node>
+    <node x="440.96230158730157" y="0.0">org.apache.servicecomb.serviceregistry.task.AbstractTask</node>
+    <node x="10.5" y="457.0">org.apache.servicecomb.serviceregistry.task.MicroserviceInstanceRegisterTask</node>
+    <node x="226.625" y="320.0">org.apache.servicecomb.serviceregistry.task.MicroserviceRegisterTask</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.apache.servicecomb.serviceregistry.task.MicroserviceWatchTask" target="org.apache.servicecomb.serviceregistry.task.MicroserviceInstanceRegisterTask">
+      <point x="-125.0" y="-43.5" />
+      <point x="469.0" y="595.0" />
+      <point x="291.75" y="595.0" />
+      <point x="93.75" y="56.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.ServiceCenterTask" target="org.apache.servicecomb.serviceregistry.task.AbstractRegisterTask">
+      <point x="-186.00000000000006" y="-95.5" />
+      <point x="164.8650793650794" y="980.0" />
+      <point x="0.0" y="980.0" />
+      <point x="0.0" y="300.0" />
+      <point x="95.48313492063488" y="300.0" />
+      <point x="-84.0" y="30.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.MicroserviceServiceCenterTask" target="org.apache.servicecomb.serviceregistry.task.CompositeTask">
+      <point x="-66.50000000000006" y="-17.5" />
+      <point x="284.3650793650793" y="890.0" />
+      <point x="189.375" y="890.0" />
+      <point x="-60.75" y="30.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.MicroserviceServiceCenterTask" target="org.apache.servicecomb.serviceregistry.task.MicroserviceInstanceHeartbeatTask">
+      <point x="110.83333333333331" y="-17.5" />
+      <point x="461.69841269841265" y="900.0" />
+      <point x="706.0" y="900.0" />
+      <point x="-91.5" y="56.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.MicroserviceServiceCenterTask" target="org.apache.servicecomb.serviceregistry.task.MicroserviceWatchTask">
+      <point x="66.5" y="-17.5" />
+      <point x="417.3650793650794" y="890.0" />
+      <point x="500.25" y="890.0" />
+      <point x="-93.75" y="43.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.MicroserviceRegisterTask" target="org.apache.servicecomb.serviceregistry.task.MicroserviceInstanceHeartbeatTask">
+      <point x="101.625" y="43.5" />
+      <point x="463.75" y="432.0" />
+      <point x="799.2331349206349" y="432.0" />
+      <point x="799.2331349206349" y="737.0" />
+      <point x="751.75" y="737.0" />
+      <point x="-45.75" y="-56.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.MicroserviceInstanceRegisterTask" target="org.apache.servicecomb.serviceregistry.task.AbstractRegisterTask">
+      <point x="-75.0" y="-56.5" />
+      <point x="123.0" y="432.0" />
+      <point x="138.84821428571428" y="432.0" />
+      <point x="138.84821428571428" y="300.0" />
+      <point x="137.48313492063488" y="300.0" />
+      <point x="-42.0" y="30.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.MicroserviceRegisterTask" target="org.apache.servicecomb.serviceregistry.task.AbstractTask">
+      <point x="90.33333333333331" y="-43.5" />
+      <point x="452.4583333333333" y="300.0" />
+      <point x="451.19146825396825" y="300.0" />
+      <point x="451.19146825396825" y="189.0" />
+      <point x="561.7123015873016" y="189.0" />
+      <point x="-17.25" y="69.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.MicroserviceRegisterTask" target="org.apache.servicecomb.serviceregistry.task.MicroserviceInstanceRegisterTask">
+      <point x="-33.875" y="43.5" />
+      <point x="328.25" y="432.0" />
+      <point x="348.0" y="432.0" />
+      <point x="150.0" y="-56.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.MicroserviceInstanceRegisterTask" target="org.apache.servicecomb.serviceregistry.task.AbstractTask">
+      <point x="-150.0" y="-56.5" />
+      <point x="48.0" y="432.0" />
+      <point x="63.98313492063494" y="432.0" />
+      <point x="63.98313492063494" y="159.0" />
+      <point x="458.21230158730157" y="159.0" />
+      <point x="-120.75" y="69.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.AbstractRegisterTask" target="org.apache.servicecomb.serviceregistry.task.AbstractTask">
+      <point x="-52.5" y="-30.5" />
+      <point x="126.98313492063488" y="169.0" />
+      <point x="492.71230158730157" y="169.0" />
+      <point x="-86.25" y="69.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.MicroserviceWatchTask" target="org.apache.servicecomb.serviceregistry.task.AbstractTask">
+      <point x="125.0" y="-43.5" />
+      <point x="719.0" y="595.0" />
+      <point x="665.0982142857142" y="595.0" />
+      <point x="665.0982142857142" y="189.0" />
+      <point x="630.7123015873016" y="189.0" />
+      <point x="51.75" y="69.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.MicroserviceServiceCenterTask" target="org.apache.servicecomb.serviceregistry.task.MicroserviceRegisterTask">
+      <point x="22.166666666666686" y="-17.5" />
+      <point x="373.031746031746" y="900.0" />
+      <point x="396.0" y="900.0" />
+      <point x="33.875" y="43.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.MicroserviceServiceCenterTask" target="org.apache.servicecomb.serviceregistry.task.MicroserviceInstanceRegisterTask">
+      <point x="-110.83333333333337" y="-17.5" />
+      <point x="240.031746031746" y="900.0" />
+      <point x="104.25" y="900.0" />
+      <point x="-93.75" y="56.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.MicroserviceInstanceRegisterTask" target="org.apache.servicecomb.serviceregistry.task.MicroserviceRegisterTask">
+      <point x="75.0" y="-56.5" />
+      <point x="273.0" y="432.0" />
+      <point x="260.5" y="432.0" />
+      <point x="-101.625" y="43.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.ServiceCenterTask" target="org.apache.servicecomb.serviceregistry.task.MicroserviceServiceCenterTask">
+      <point x="61.99999999999994" y="-95.5" />
+      <point x="412.8650793650794" y="980.0" />
+      <point x="417.3650793650794" y="980.0" />
+      <point x="66.5" y="17.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.MicroserviceRegisterTask" target="org.apache.servicecomb.serviceregistry.task.AbstractRegisterTask">
+      <point x="0.0" y="-43.5" />
+      <point x="362.125" y="290.0" />
+      <point x="263.4831349206349" y="290.0" />
+      <point x="84.0" y="30.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.ServiceCenterTask" target="org.apache.servicecomb.serviceregistry.task.MicroserviceInstanceHeartbeatTask">
+      <point x="185.99999999999994" y="-95.5" />
+      <point x="536.8650793650794" y="980.0" />
+      <point x="889.0" y="980.0" />
+      <point x="91.5" y="56.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.MicroserviceInstanceHeartbeatTask" target="org.apache.servicecomb.serviceregistry.task.AbstractTask">
+      <point x="137.25" y="-56.5" />
+      <point x="934.75" y="727.0" />
+      <point x="821.2331349206349" y="727.0" />
+      <point x="821.2331349206349" y="169.0" />
+      <point x="699.7123015873016" y="169.0" />
+      <point x="120.75" y="69.5" />
+    </edge>
+    <edge source="org.apache.servicecomb.serviceregistry.task.MicroserviceInstanceHeartbeatTask" target="org.apache.servicecomb.serviceregistry.task.MicroserviceWatchTask">
+      <point x="-137.25" y="-56.5" />
+      <point x="660.25" y="737.0" />
+      <point x="687.75" y="737.0" />
+      <point x="93.75" y="43.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.1055921052631577" x="412.9033812934624" y="306.36963842585754" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
