@@ -641,7 +641,7 @@ public class ServiceCenterTask implements Runnable {
         serviceRegistryConfig.getHeartbeatInterval(),
         serviceRegistryConfig.getHeartbeatInterval(),
         TimeUnit.SECONDS);
-	// 定时启动 pull event ,也是只是留了位置,还没有具体的业务逻辑
+	// 定时启动 pull event, 周期性的拉取实例
     taskPool.scheduleAtFixedRate(
         () -> eventBus.post(new PeriodicPullEvent()),
         serviceRegistryConfig.getInstancePullInterval(),
